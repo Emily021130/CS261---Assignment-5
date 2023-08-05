@@ -47,9 +47,9 @@ class MinHeap:
         child = self._heap.length() - 1
         parent = (child - 1) // 2
         while child > 0:
-            if self._heap.get_at_index(child) < self._heap.get_at_index(parent):
-                parent_node = self._heap.get_at_index(parent)
-                child_node = self._heap.get_at_index(child)
+            if self._heap[child] < self._heap[parent]:
+                parent_node = self._heap[parent]
+                child_node = self._heap[child]
                 self._heap.set_at_index(child, parent_node)
                 self._heap.set_at_index(parent, child_node)
                 child = parent
@@ -70,7 +70,10 @@ class MinHeap:
         """
         TODO: Write this implementation
         """
-        pass
+        if self._heap.is_empty() is True:
+            raise MinHeapException
+        else:
+            return self._heap[0]
 
     def remove_min(self) -> object:
         """
