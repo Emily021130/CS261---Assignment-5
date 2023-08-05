@@ -43,13 +43,25 @@ class MinHeap:
         """
         TODO: Write this implementation
         """
-        pass
+        self._heap.append(node)
+        child = self._heap.length() - 1
+        parent = (child - 1) // 2
+        while child > 0:
+            if self._heap.get_at_index(child) < self._heap.get_at_index(parent):
+                parent_node = self._heap.get_at_index(parent)
+                child_node = self._heap.get_at_index(child)
+                self._heap.set_at_index(child, parent_node)
+                self._heap.set_at_index(parent, child_node)
+                child = parent
+                parent = (child - 1) // 2
+            else:
+                break
 
     def is_empty(self) -> bool:
         """
         TODO: Write this implementation
         """
-        if self._heap.length() == 0:
+        if self._heap.is_empty() is True:
             return True
         else:
             return False
