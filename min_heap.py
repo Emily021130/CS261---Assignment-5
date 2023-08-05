@@ -49,7 +49,7 @@ class MinHeap:
         """
         TODO: Write this implementation
         """
-        if self._heap.is_empty() is True:
+        if self._heap.length() == 0:
             return True
         else:
             return False
