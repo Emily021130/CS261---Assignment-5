@@ -165,7 +165,7 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
         temp = da[parent]
         da[parent] = da[min_child]
         da[min_child] = temp
-        _percolate_down(da, min_child)
+        _percolate_down_2(da, min_child, last)
 
 # ------------------- BASIC TESTING -----------------------------------------
 
