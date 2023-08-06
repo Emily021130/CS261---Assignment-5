@@ -158,10 +158,8 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
     min_child = parent
     if left_child <= last and da[left_child] < da[min_child]:
         min_child = left_child
-        last -= 1
     if right_child <= last and da[right_child] < da[min_child]:
         min_child = right_child
-        last -= 1
     if min_child != parent:
         last -= 1
         temp = da[parent]
