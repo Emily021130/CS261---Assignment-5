@@ -91,7 +91,15 @@ class MinHeap:
         """
         TODO: Write this implementation
         """
-        pass
+        new_heap = DynamicArray()
+        for index in range(da.length()):
+            value = da[index]
+            new_heap.append(value)
+        self._heap = new_heap
+        parent = da.length() // 2
+        while parent >= 0:
+            _percolate_down(self._heap, parent)
+            parent -= 1
 
     def size(self) -> int:
         """
