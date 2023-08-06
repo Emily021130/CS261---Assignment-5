@@ -117,8 +117,6 @@ def heapsort(da: DynamicArray) -> None:
     """
     TODO: Write this implementation
     """
-    heap = MinHeap()
-    heap.build_heap(da)
     parent = da.length() // 2 - 1
     last = da.length() - 1
     for index in range(parent, -1, -1):
