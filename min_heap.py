@@ -149,7 +149,7 @@ def _percolate_down(da: DynamicArray, parent: int) -> None:
         da[min_child] = temp
         _percolate_down(da, min_child)
 
-def _percolate_down_2(da: DynamicArray, parent: int, last) -> None:
+def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
     """
     TODO: Write your implementation
     """
@@ -158,14 +158,16 @@ def _percolate_down_2(da: DynamicArray, parent: int, last) -> None:
     min_child = parent
     if left_child <= last and da[left_child] < da[min_child]:
         min_child = left_child
+        last -= 1
     if right_child <= last and da[right_child] < da[min_child]:
         min_child = right_child
+        last -= 1
     if min_child != parent:
+        last -= 1
         temp = da[parent]
         da[parent] = da[min_child]
         da[min_child] = temp
-        _percolate_down_2(da, min_child, last)
-
+        _percolate_down(da, min_child)
 
 # ------------------- BASIC TESTING -----------------------------------------
 
