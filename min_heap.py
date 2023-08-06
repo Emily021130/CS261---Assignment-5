@@ -117,17 +117,12 @@ def heapsort(da: DynamicArray) -> None:
     """
     TODO: Write this implementation
     """
-    parent = da.length() // 2 - 1
-    last = da.length() - 1
-    while parent >= 0:
-        _percolate_down(da, parent)
-        parent -= 1
-    while last > 0:
-        parent_node = da[0]
-        da[0] = da[last]
-        da[last] = parent_node
-        _percolate_down_2(da, 0, last)
-        last -= 1
+    k = da.length() - 1
+    heap = MinHeap()
+    heap.build_heap(da)
+    while k >= 0:
+        da[k] = heap.remove_min()
+        k -= 1
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
