@@ -126,6 +126,7 @@ def heapsort(da: DynamicArray) -> None:
         min_value = da[0]
         da.set_at_index(0, da[da.length() - 1])
         da.remove_at_index(da.length() - 1)
+        _percolate_down(da, 0)
         da[k] = min_value
         k -= 1
 
