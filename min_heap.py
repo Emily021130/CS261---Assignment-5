@@ -84,7 +84,7 @@ class MinHeap:
         min_value = self._heap[0]
         self._heap.set_at_index(0, self._heap[self._heap.length() - 1])
         self._heap.remove_at_index(self._heap.length() - 1)
-        _percolate_down_2(self._heap, 0, da.length())
+        _percolate_down_2(self._heap, 0, self._heap.length())
         return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
