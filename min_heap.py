@@ -81,7 +81,7 @@ class MinHeap:
         """
         if self._heap.is_empty() is True:
             raise MinHeapException
-        min_value = self.get_min()
+        min_value = self._heap[0]
         self._heap.set_at_index(0, self._heap[self._heap.length() - 1])
         self._heap.remove_at_index(self._heap.length() - 1)
         _percolate_down(self._heap, 0)
@@ -123,16 +123,15 @@ def _percolate_down(da: DynamicArray, parent: int) -> None:
     left_child = parent * 2 + 1
     right_child = parent * 2 + 2
     min_child = parent
-    if left_child < da.length() - 1 and da[left_child] < da[min_child]:
+    if left_child <= da.length() - 1 and da[left_child] < da[min_child]:
         min_child = left_child
-    if right_child < da.length() - 1 and da[right_child] < da[min_child]:
+    if right_child <= da.length() - 1 and da[right_child] < da[min_child]:
         min_child = right_child
     if min_child != parent:
         temp = da[parent]
         da[parent] = da[min_child]
         da[min_child] = temp
         _percolate_down(da, min_child)
-
 
 # ------------------- BASIC TESTING -----------------------------------------
 
