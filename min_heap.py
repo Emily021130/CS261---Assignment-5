@@ -119,8 +119,9 @@ def heapsort(da: DynamicArray) -> None:
     """
     parent = da.length() // 2 - 1
     last = da.length() - 1
-    for index in range(parent, -1, -1):
+    while parent >= 0:
         _percolate_down(da, parent)
+        parent -= 1
     while last > 0:
         parent_node = da[0]
         da[0] = da[last]
@@ -153,19 +154,20 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
     """
     TODO: Write your implementation
     """
-    left_child = parent * 2 + 1
-    right_child = parent * 2 + 2
-    min_child = parent
-    if left_child <= last and da[left_child] < da[min_child]:
-        min_child = left_child
-    if right_child <= last and da[right_child] < da[min_child]:
-        min_child = right_child
-    if min_child != parent:
-        last -= 1
+    while parent < last:
+        left_child = parent * 2 + 1
+        right_child = parent * 2 + 2
+        min_child = parent
+        if left_child <= last and da[left_child] < da[min_child]:
+            min_child = left_child
+        if right_child <= last and da[right_child] < da[min_child]:
+            min_child = right_child
+        if min_child == parent:
+            break
         temp = da[parent]
         da[parent] = da[min_child]
         da[min_child] = temp
-        _percolate_down_2(da, min_child, last)
+        parent = min_child
 
 # ------------------- BASIC TESTING -----------------------------------------
 
