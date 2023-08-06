@@ -153,22 +153,23 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
     """
     TODO: Write your implementation
     """
-    index = parent
-    while index < last:
-        left_child = (2 * index) + 1
-        right_child = (2 * index) + 2
-        minimum_child = index
-        if left_child < last and da[left_child] < da[minimum_child]:
-            minimum_child = left_child
-        if right_child < last and da[right_child] < da[minimum_child]:
-            minimum_child = right_child
+    while parent < last:
+        left_child = parent * 2 + 1
+        right_child = parent * 2 + 2
+        min_child = parent
+        if left_child < last and da[left_child] < da[min_child]:
+            min_child = left_child
+        if right_child < last and da[right_child] < da[min_child]:
+            min_child = right_child
         if left_child < last and right_child < last and da[left_child] == da[right_child] and da[left_child] < da[
-            minimum_child]:
-            minimum_child = left_child
-        if minimum_child == index:
+            min_child]:
+            min_child = left_child
+        if min_child == parent:
             break
-        da[index], da[minimum_child] = da[minimum_child], da[index]
-        index = minimum_child
+        temp = da[parent]
+        da[parent] = da[min_child]
+        da[min_child] = temp
+        parent = min_child
 
 
 # ------------------- BASIC TESTING -----------------------------------------
