@@ -118,17 +118,15 @@ def heapsort(da: DynamicArray) -> None:
     TODO: Write this implementation
     """
     parent = da.length() // 2 - 1
-    while parent >= 0:
-        _percolate_down(da, parent)
-        parent -= 1
-    k = da.length() - 1
-    while k >= 0:
-        min_value = da[0]
-        da.set_at_index(0, da[k])
-        da.remove_at_index(k)
-        _percolate_down(da, 0)
-        da[k] = min_value
-        k -= 1
+    last = da.length() - 1
+    for index in range(parent, -1, -1):
+        _percolate_down_2(da, index, da.length())
+    while last > 0:
+        parent_node = da[0]
+        da[0] = da[last]
+        da[last] = parent_node
+        _percolate_down_2(da, 0, last)
+        last -= 1
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
@@ -155,19 +153,22 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
     """
     TODO: Write your implementation
     """
-    left_child = parent * 2 + 1
-    right_child = parent * 2 + 2
-    min_child = parent
-    if left_child <= last and da[left_child] < da[min_child]:
-        min_child = left_child
-    if right_child <= last and da[right_child] < da[min_child]:
-        min_child = right_child
-    if min_child != parent:
-        last -= 1
-        temp = da[parent]
-        da[parent] = da[min_child]
-        da[min_child] = temp
-        _percolate_down_2(da, min_child, last)
+    index = parent
+    while index < last:
+        left_child = (2 * index) + 1
+        right_child = (2 * index) + 2
+        minimum_child = index
+        if left_child < last and da[left_child] < da[minimum_child]:
+            minimum_child = left_child
+        if right_child < last and da[right_child] < da[minimum_child]:
+            minimum_child = right_child
+        if left_child < last and right_child < last and da[left_child] == da[right_child] and da[left_child] < da[
+            minimum_child]:
+            minimum_child = left_child
+        if minimum_child == index:
+            break
+        da[index], da[minimum_child] = da[minimum_child], da[index]
+        index = minimum_child
 
 
 # ------------------- BASIC TESTING -----------------------------------------
