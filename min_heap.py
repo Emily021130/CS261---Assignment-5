@@ -84,7 +84,7 @@ class MinHeap:
         min_value = self._heap[0]
         self._heap.set_at_index(0, self._heap[self._heap.length() - 1])
         self._heap.remove_at_index(self._heap.length() - 1)
-        _percolate_down(self._heap, 0, da.length() - 1)
+        _percolate_down(self._heap, 0)
         return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
@@ -98,7 +98,7 @@ class MinHeap:
         self._heap = new_heap
         parent = da.length() // 2 - 1
         while parent >= 0:
-            _percolate_down(self._heap, parent, da.length() - 1)
+            _percolate_down(self._heap, parent)
             parent -= 1
 
     def size(self) -> int:
@@ -117,23 +117,42 @@ def heapsort(da: DynamicArray) -> None:
     """
     TODO: Write this implementation
     """
+    heap = MinHeap()
+    heap.build_heap(da)
     parent = da.length() // 2 - 1
-    end = da.length() - 1
+    last = da.length() - 1
     for index in range(parent, -1, -1):
-        _percolate_down(da, parent, da.length() -1)
-    while end > 0:
+        _percolate_down(da, parent)
+    while last > 0:
         parent_node = da[0]
-        da[0] = da[end]
-        da[end] = parent_node
-        _percolate_down(da, 0, da.length() -1)
-        end -= 1
+        da[0] = da[last]
+        da[last] = parent_node
+        _percolate_down_2(da, 0, last)
+        last -= 1
 
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
 # this from inside the MinHeap class. You may edit the function definition.  #
 
-def _percolate_down(da: DynamicArray, parent: int, last: int) -> None:
+def _percolate_down(da: DynamicArray, parent: int) -> None:
+    """
+    TODO: Write your implementation
+    """
+    left_child = parent * 2 + 1
+    right_child = parent * 2 + 2
+    min_child = parent
+    if left_child <= da.length() - 1 and da[left_child] < da[min_child]:
+        min_child = left_child
+    if right_child <= da.length() - 1 and da[right_child] < da[min_child]:
+        min_child = right_child
+    if min_child != parent:
+        temp = da[parent]
+        da[parent] = da[min_child]
+        da[min_child] = temp
+        _percolate_down(da, min_child)
+
+def _percolate_down_2(da: DynamicArray, parent: int, last) -> None:
     """
     TODO: Write your implementation
     """
@@ -148,8 +167,8 @@ def _percolate_down(da: DynamicArray, parent: int, last: int) -> None:
         temp = da[parent]
         da[parent] = da[min_child]
         da[min_child] = temp
-        _percolate_down(da, min_child, last)
-        last -= 1
+        _percolate_down_2(da, min_child, last)
+
 
 # ------------------- BASIC TESTING -----------------------------------------
 
