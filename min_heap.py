@@ -125,9 +125,8 @@ def heapsort(da: DynamicArray) -> None:
         parent_node = da[0]
         da[0] = da[last]
         da[last] = parent_node
-        _percolate_down(da, 0)
+        _percolate_down_2(da, 0, last)
         last -= 1
-
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
