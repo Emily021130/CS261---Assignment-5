@@ -44,16 +44,16 @@ class MinHeap:
         TODO: Write this implementation
         """
         self._heap.append(node)
-        child = self._heap.length() - 1
-        parent = (child - 1) // 2
-        while child > 0:
-            if self._heap[child] < self._heap[parent]:
-                parent_node = self._heap[parent]
-                child_node = self._heap[child]
-                self._heap.set_at_index(child, parent_node)
-                self._heap.set_at_index(parent, child_node)
-                child = parent
-                parent = (child - 1) // 2
+        child_index = self._heap.length() - 1
+        parent_index = (child_index - 1) // 2
+        while child_index > 0:
+            if self._heap[child_index] < self._heap[parent_index]:
+                parent_node = self._heap[parent_index]
+                child_node = self._heap[child_index]
+                self._heap.set_at_index(child_index, parent_node)
+                self._heap.set_at_index(parent_index, child_node)
+                child_index = parent_index
+                parent_index = (child_index - 1) // 2
             else:
                 break
 
@@ -79,7 +79,13 @@ class MinHeap:
         """
         TODO: Write this implementation
         """
-        pass
+        if self._heap.is_empty() is True:
+            raise MinHeapException
+        min_value = self.get_min()
+        self._heap.set_at_index(0, self._heap[self._heap.length() - 1])
+        self._heap.remove_at_index(self._heap.length() - 1)
+        _percolate_down(self._heap, 0)
+        return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
         """
@@ -114,7 +120,18 @@ def _percolate_down(da: DynamicArray, parent: int) -> None:
     """
     TODO: Write your implementation
     """
-    pass
+    left_child = parent * 2 + 1
+    right_child = parent * 2 + 2
+    min_child = parent
+    if left_child < da.length() - 1 and da[left_child] < da[min_child]:
+        min_child = left_child
+    if right_child < da.length() - 1 and da[right_child] < da[min_child]:
+        min_child = right_child
+    if min_child != parent:
+        temp = da[parent]
+        da[parent] = da[min_child]
+        da[min_child] = temp
+        _percolate_down(da, min_child)
 
 
 # ------------------- BASIC TESTING -----------------------------------------
