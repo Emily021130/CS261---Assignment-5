@@ -96,7 +96,7 @@ class MinHeap:
             value = da[index]
             new_heap.append(value)
         self._heap = new_heap
-        parent = da.length() // 2
+        parent = da.length() // 2 - 1
         while parent >= 0:
             _percolate_down(self._heap, parent)
             parent -= 1
@@ -117,7 +117,17 @@ def heapsort(da: DynamicArray) -> None:
     """
     TODO: Write this implementation
     """
-    pass
+    parent = da.length() // 2 - 1
+    last = da.length() - 1
+    while parent >= 0:
+        _percolate_down(da, parent)
+        parent -= 1
+    while last > 0:
+        parent_node = da[0]
+        da[0] = da[last]
+        da[last] = parent_node
+        last -= 1
+        _percolate_down(da, 0)
 
 
 # It's highly recommended that you implement the following optional          #
