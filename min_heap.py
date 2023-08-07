@@ -139,7 +139,7 @@ def heapsort(da: DynamicArray) -> None:
 
 def _percolate_down(da: DynamicArray, parent: int, last: int) -> None:
     """
-    Helper function for remove_min(), build_heap() and heapsort(). Percolate elements down to their proper places
+    Helper function for remove_min(), build_heap() and heapsort(). Percolate elements down to the proper places
     so that no parent node holds value bigger than the values held by its child nodes. Swap with the left child
     if both children of the node have the same value.
     """
