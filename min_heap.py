@@ -3,7 +3,8 @@
 # Course: CS261 - Data Structures
 # Assignment: Assignment 5
 # Due Date: 08/07/2023
-# Description:
+# Description: Implement the MinHeap class which includes eight different methods and a separate heapsort()
+#              function.
 
 
 from dynamic_array import *
@@ -41,7 +42,7 @@ class MinHeap:
 
     def add(self, node: object) -> None:
         """
-        TODO: Write this implementation
+        Add a new object to the MinHeap while maintaining heap property.
         """
         self._heap.append(node)
         child_index = self._heap.length() - 1
@@ -59,7 +60,7 @@ class MinHeap:
 
     def is_empty(self) -> bool:
         """
-        TODO: Write this implementation
+        Return True if the heap is empty, and return False otherwise.
         """
         if self._heap.is_empty() is True:
             return True
@@ -68,7 +69,8 @@ class MinHeap:
 
     def get_min(self) -> object:
         """
-        TODO: Write this implementation
+        Return an object with the minimum key without removing it from the heap. Raise a MinHeapException
+        if the heap is empty.
         """
         if self._heap.is_empty() is True:
             raise MinHeapException
@@ -77,19 +79,22 @@ class MinHeap:
 
     def remove_min(self) -> object:
         """
-        TODO: Write this implementation
+        Return an object with the minimum key and remove it from the heap. Raise a MinHeapException if the
+        heap is empty. Swap with the left child  if both children of the node have the same value and are
+        both smaller than the node.
         """
         if self._heap.is_empty() is True:
             raise MinHeapException
         min_value = self._heap[0]
         self._heap.set_at_index(0, self._heap[self._heap.length() - 1])
         self._heap.remove_at_index(self._heap.length() - 1)
-        _percolate_down_2(self._heap, 0, self._heap.length())
+        _percolate_down(self._heap, 0, self._heap.length())
         return min_value
 
     def build_heap(self, da: DynamicArray) -> None:
         """
-        TODO: Write this implementation
+        Receive a DynamicArray with objects in any order, and build a proper MinHeap from them. Current
+        content of the MinHeap is overwritten.
         """
         new_heap = DynamicArray()
         for index in range(da.length()):
@@ -98,60 +103,45 @@ class MinHeap:
         self._heap = new_heap
         parent = da.length() // 2 - 1
         while parent >= 0:
-            _percolate_down_2(self._heap, parent, da.length())
+            _percolate_down(self._heap, parent, da.length())
             parent -= 1
 
     def size(self) -> int:
         """
-        TODO: Write this implementation
+        Return the number of items currently stored in the heap.
         """
         return self._heap.length()
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        Clear the contents of the heap.
         """
         self._heap = DynamicArray()
 
 def heapsort(da: DynamicArray) -> None:
     """
-    TODO: Write this implementation
+    Receive a DynamicArray and sort its content in non-ascending order, using the Heapsort algorithm.
     """
     parent = da.length() // 2 - 1
     last = da.length() - 1
     for index in range(parent, -1, -1):
-        _percolate_down_2(da, index, da.length())
+        _percolate_down(da, index, da.length())
     while last > 0:
         parent_node = da[0]
         da[0] = da[last]
         da[last] = parent_node
-        _percolate_down_2(da, 0, last)
+        _percolate_down(da, 0, last)
         last -= 1
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
 # this from inside the MinHeap class. You may edit the function definition.  #
 
-def _percolate_down(da: DynamicArray, parent: int) -> None:
+def _percolate_down(da: DynamicArray, parent: int, last: int) -> None:
     """
-    TODO: Write your implementation
-    """
-    left_child = parent * 2 + 1
-    right_child = parent * 2 + 2
-    min_child = parent
-    if left_child <= da.length() - 1 and da[left_child] < da[min_child]:
-        min_child = left_child
-    if right_child <= da.length() - 1 and da[right_child] < da[min_child]:
-        min_child = right_child
-    if min_child != parent:
-        temp = da[parent]
-        da[parent] = da[min_child]
-        da[min_child] = temp
-        _percolate_down(da, min_child)
-
-def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
-    """
-    TODO: Write your implementation
+    Helper function for remove_min(), build_heap() and heapsort(). Percolate elements down to their proper places
+    so that no parent node holds value bigger than the values held by its child nodes. Swap with the left child
+    if both children of the node have the same value.
     """
     while parent < last:
         left_child = parent * 2 + 1
@@ -161,8 +151,8 @@ def _percolate_down_2(da: DynamicArray, parent: int, last: int) -> None:
             min_child = left_child
         if right_child < last and da[right_child] < da[min_child]:
             min_child = right_child
-        if left_child < last and right_child < last and da[left_child] == da[right_child] and da[left_child] < da[
-            min_child]:
+        if left_child < last and right_child < last and da[left_child] == da[right_child] \
+                and da[left_child] < da[min_child]:
             min_child = left_child
         if min_child == parent:
             break
